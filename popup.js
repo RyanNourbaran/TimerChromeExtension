@@ -16,7 +16,7 @@ function getCurrentTabUrl(callback) {
     currentWindow: true
   };
 
-  chrome.tabs.query(queryInfo, (tabs) => {
+  chrome.tabs.query(queryInfo, tabs => {
     // chrome.tabs.query invokes the callback with a list of tabs that match the
     // query. When the popup is opened, there is certainly a window and at least
     // one tab, so we can safely assume that |tabs| is a non-empty array.
@@ -32,7 +32,7 @@ function getCurrentTabUrl(callback) {
     // If you want to see the URL of other tabs (e.g. after removing active:true
     // from |queryInfo|), then the "tabs" permission is required to see their
     // "url" properties.
-    console.assert(typeof url == 'string', 'tab.url should be a string');
+    console.assert(typeof url == "string", "tab.url should be a string");
 
     callback(url);
   });
@@ -75,7 +75,7 @@ function getSavedBackgroundColor(url, callback) {
   // See https://developer.chrome.com/apps/storage#type-StorageArea. We check
   // for chrome.runtime.lastError to ensure correctness even when the API call
   // fails.
-  chrome.storage.sync.get(url, (items) => {
+  chrome.storage.sync.get(url, items => {
     callback(chrome.runtime.lastError ? null : items[url]);
   });
 }
@@ -103,13 +103,13 @@ function saveBackgroundColor(url, color) {
 // to a document's origin. Also, using chrome.storage.sync instead of
 // chrome.storage.local allows the extension data to be synced across multiple
 // user devices.
-document.addEventListener('DOMContentLoaded', () => {
-  getCurrentTabUrl((url) => {
-    var dropdown = document.getElementById('dropdown');
+document.addEventListener("DOMContentLoaded", () => {
+  getCurrentTabUrl(url => {
+    var dropdown = document.getElementById("dropdown");
 
     // Load the saved background color for this page and modify the dropdown
     // value, if needed.
-    getSavedBackgroundColor(url, (savedColor) => {
+    getSavedBackgroundColor(url, savedColor => {
       if (savedColor) {
         changeBackgroundColor(savedColor);
         dropdown.value = savedColor;
@@ -118,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Ensure the background color is changed and saved when the dropdown
     // selection changes.
-    dropdown.addEventListener('change', () => {
+    dropdown.addEventListener("change", () => {
       changeBackgroundColor(dropdown.value);
       saveBackgroundColor(url, dropdown.value);
     });
