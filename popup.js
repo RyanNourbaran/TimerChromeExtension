@@ -1,15 +1,15 @@
 document.addEventListener("DOMContentLoaded", () => {
     var time = document.getElementById("time");
-    var startStopBtn = document.getElementById("resetBtn");
+    var startStopBtn = document.getElementById("startStopBtn");
     var startTime = time.textContent;
 
-    startStopBtn.addEventListener("click", () => {
+    document.getElementById("resetBtn").addEventListener("click", () => {
         time.innerHTML = startTime;
         clearInterval(decreaseTime);
     });
 
     startStopBtn.addEventListener("click", () => {
-        document.getElementById("startStopBtn").innerHTML = "Stop";
+        startStopBtn.innerHTML = "Stop";
         var decreaseTime = setInterval(() => {
             if (time.textContent != 0 && started) {
                 time.innerHTML = time.textContent - 1;
